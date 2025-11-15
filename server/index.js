@@ -18,14 +18,20 @@ const __dirname = path.resolve();
 
 connectDB();
 
-app.use(cors({
-  origin: [
-    "https://benevolent-world.vercel.app",
-    "http://localhost:5173"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: [
+      "https://benevolent-world.vercel.app",
+      "http://localhost:5173",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus: 200,
+  })
+);
+
 
 app.options("*", cors());
 
@@ -37,7 +43,7 @@ app.use("/api/user", userRoute);
 app.use("/api/package", packageRoute);
 app.use("/api/rating", ratingRoute);
 app.use("/api/booking", bookingRoute);
-app.use("/payment", paymentRoutes);
+app.use("/api/payment", paymentRoutes);
 
  const PORT = process.env.PORT || 5000;
 

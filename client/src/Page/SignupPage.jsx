@@ -64,7 +64,11 @@ const SignupPage = () => {
        return;
       }
       try {
-         const res = await axios.post(`${API_URL}/api/auth/signup`, formData);
+         const res = await axios.post(`${API_URL}/api/auth/signup`, formData,  
+           {
+              withCredentials: true,   // IMPORTANT for CORS
+          }
+    );
       if (res?.data?.success) {
         toast.success(res?.data?.message);
         navigate("/login");
