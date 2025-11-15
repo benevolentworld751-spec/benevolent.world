@@ -12,32 +12,31 @@ import cors from "cors";
 import { connectDB } from "./config/connectDB.js";
 import cookieParser from "cookie-parser";
 
-
 const app = express();
 const __dirname = path.resolve();
 
 connectDB();
 
+// ✅ FIXED CORS
 app.use(
   cors({
     origin: [
-      "https://benevolent-world.vercel.app",
-      "http://localhost:5173",
+      "https://benevolent-world.vercel.app", // frontend
+      "http://localhost:5173"               // local dev
     ],
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
-    preflightContinue: false,
-    optionsSuccessStatus: 200,
   })
 );
 
-
-app.options("*", cors());
-
 app.use(express.json());
 app.use(cookieParser());
+
+// Serve uploads
 app.use("/images", express.static("uploads"));
+
+// API routes
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/package", packageRoute);
@@ -45,24 +44,25 @@ app.use("/api/rating", ratingRoute);
 app.use("/api/booking", bookingRoute);
 app.use("/api/payment", paymentRoutes);
 
- const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
+// ==========================================
+// 🚀 PRODUCTION MODE (Render)
+// ==========================================
 if (process.env.NODE_ENV_CUSTOM === "production") {
-  //static files
   app.use(express.static(path.join(__dirname, "/client/dist")));
 
-  app.get("*", (req, res) => {
+  // ❗ Express 5 fix → "*" breaks; must use "/*"
+  app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
   });
 } else {
-  // //rest api
-  app.use("/", (req, res) => {
+  app.get("/", (req, res) => {
     res.send("Welcome to travel and tourism app");
   });
 }
 
-
-//port
+// Start server
 app.listen(PORT, () => {
-  console.log(`listening on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
