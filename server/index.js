@@ -20,13 +20,14 @@ connectDB();
 
 app.use(cors({
   origin: [
-    "https://benevolentworld-tour.vercel.app",
+    "https://benevolent-world.vercel.app",
     "http://localhost:5173"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   credentials: true
 }));
 
+app.options("*", cors());
 
 app.use(express.json());
 app.use(cookieParser());
@@ -57,6 +58,5 @@ if (process.env.NODE_ENV_CUSTOM === "production") {
 
 //port
 app.listen(PORT, () => {
-  connectDB();
   console.log(`listening on http://localhost:${PORT}`);
 });
