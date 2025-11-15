@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
 const AddPackages = () => {
   const [formData, setFormData] = useState({
     packageName: "",
@@ -100,8 +103,8 @@ const AddPackages = () => {
       setIsUploading(true);
       setLoading(true);
       const res = await axios.post(
-       // `http://localhost:5000/api/package/update-package/${params?.id}`, // Update API endpoint
-       "https://benevolentworld-tour.onrender.com/api/package/create-package",
+        `${API_URL}/api/package/update-package/${params?.id}`, // Update API endpoint
+        //`${API_URL}/api/package/create-package`,
         data,
         {
           headers: {

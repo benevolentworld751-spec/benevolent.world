@@ -2,7 +2,10 @@ import  { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
 const History = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [allBookings, setAllBookings] = useState([]);
@@ -14,7 +17,7 @@ const History = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        `/api/booking/get-allBookings?searchTerm=${search}`
+        `${API_URL}/api/booking/get-allBookings?searchTerm=${search}`
       );
       const data = await res.json();
       if (data?.success) {
@@ -38,7 +41,7 @@ const History = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        `/api/booking/delete-booking-history/${id}/${currentUser._id}`,
+        `${API_URL}/api/booking/delete-booking-history/${id}/${currentUser._id}`,
         {
           method: "DELETE",
         }
@@ -85,7 +88,7 @@ const History = () => {
                 <Link to={`/package/${booking?.packageDetails?._id}`}>
                   <img
                     className="w-12 h-12"
-                    src={`https://benevolentworld-tour.onrender.com/images/${booking?.packageDetails?.packageImages[0]}`}
+                    src={`${API_URL}/images/${booking?.packageDetails?.packageImages[0]}`}
                     alt="Package Image"
                   />
                 </Link>

@@ -5,6 +5,10 @@ import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Map from "../../components/Map";
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
 
 const Booking = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -49,7 +53,7 @@ const Booking = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        `/api/package/get-package-data/${params?.packageId}`
+        `${API_URL}/api/package/get-package-data/${params?.packageId}`
       );
       const data = await res.json();
       if (data?.success) {
@@ -83,7 +87,7 @@ const Booking = () => {
   //get paymentgateway token
   const getToken = async () => {
     try {
-      const { data } = await axios.get(`/api/package/braintree/token`);
+      const { data } = await axios.get(`${API_URL}/api/package/braintree/token`);
       setClientToken(data?.clientToken);
     } catch (err) {
       console.log(err);
@@ -108,7 +112,7 @@ const Booking = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        `http://localhost:5000/api/booking/book-package/${params?.id}`,
+        `${API_URL}/api/booking/book-package/${params?.id}`,
         {
           method: "POST",
           headers: {
@@ -215,7 +219,7 @@ const Booking = () => {
               <div className="flex flex-wrap gap-6">
                 <img
                   className="w-28"
-                  src={`http://localhost:5000/images/${packageData.packageImages[0]}`}
+                  src={`${API_URL}/images/${packageData.packageImages[0]}`}
                   alt="Package image"
                 />
                 <div>

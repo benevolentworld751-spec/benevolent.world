@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
-
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
 const UpdatePackage = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -27,7 +30,7 @@ const UpdatePackage = () => {
 
   const getPackageData = async () => {
     try {
-      const res = await fetch(`/api/package/get-package-data/${params?.id}`);
+      const res = await fetch(`${API_URL}/api/package/get-package-data/${params?.id}`);
       const data = await res.json();
       if (data?.success) {
         // console.log(data);
@@ -129,7 +132,7 @@ const UpdatePackage = () => {
         form.append("packageImages", image); // Must match Multer field name
       });
 
-      const res = await fetch(`/api/package/update-package/${params?.id}`, {
+      const res = await fetch(`${API_URL}/api/package/update-package/${params?.id}`, {
         method: "POST", // or POST if you prefer
         body: form,
       });
@@ -332,7 +335,7 @@ const UpdatePackage = () => {
                   className="shadow-md rounded-md p-2 flex justify-between items-center"
                 >
                   <img
-                    src={`https://benevolentworld-tour.onrender.com/images/${image}`}
+                    src={`${API_URL}/images/${image}`}
                     alt=""
                     className="h-20 w-20 rounded"
                   />

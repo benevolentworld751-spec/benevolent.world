@@ -17,6 +17,10 @@ import MyBookings from "../Page/user/MyBooking";
 import UpdateProfile from "../Page/user/UpdateProfile";
 import MyHistory from "../Page/user/MyHistory";
 import { toast } from "react-toastify";
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -47,7 +51,7 @@ const Profile = () => {
   const handleLogout = async () => {
     try {
       dispatch(logOutStart());
-      const res = await fetch("/api/auth/logout");
+      const res = await fetch(`${API_URL}/api/auth/logout`);
       const data = await res.json();
       if (data?.success !== true) {
         dispatch(logOutFailure(data?.message));
@@ -69,7 +73,7 @@ const Profile = () => {
     if (CONFIRM) {
       try {
         dispatch(deleteUserAccountStart());
-        const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        const res = await fetch(`${API_URL}/api/user/delete/${currentUser._id}`, {
           method: "DELETE",
         });
         const data = await res.json();
@@ -96,7 +100,7 @@ const Profile = () => {
                 <img
                   src={
                     currentUser.avatar
-                      ? `https://benevolentworld-tour.onrender.com/images/${currentUser.avatar}`
+                      ? `${API_URL}/images/${currentUser.avatar}`
                       : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTueIx2Jkawe7r91I50VfVAZLS60yx8RjiSfQ&s"
                   }
                   alt="Profile photo"

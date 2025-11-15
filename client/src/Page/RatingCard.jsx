@@ -1,6 +1,11 @@
 import { Rating } from "@mui/material";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import defaultProfileImg from "../assets/logo.png"
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
+
 const RatingCard = ({packageRatings }) => {
   console.log(packageRatings);
   return (
@@ -16,7 +21,7 @@ const RatingCard = ({packageRatings }) => {
               <div className="flex gap-2 items-center">
                 <img
                   src={
-                    `https://benevolentworld-tour.onrender.com/images/${rating.userProfileImg}`
+                    `${API_URL}/images/${rating.userProfileImg}`
                     
                   }
                   alt={rating.username[0]}

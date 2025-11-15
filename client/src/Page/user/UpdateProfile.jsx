@@ -11,7 +11,10 @@ import {
 import { toast } from "react-toastify";
 import axios from "axios";
 import { FiUpload } from "react-icons/fi";
-
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
 const UpdateProfile = () => {
   const { currentUser, loading,} = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -95,7 +98,7 @@ const UpdateProfile = () => {
       }
 
       const res = await axios.post(
-        `/api/user/update/${currentUser._id}`,
+        `${API_URL}/api/user/update/${currentUser._id}`,
         updatedForm
       );
 
@@ -129,7 +132,7 @@ const UpdateProfile = () => {
     }
     try {
       dispatch(updatePassStart());
-      const res = await fetch(`/api/user/update-password/${currentUser._id}`, {
+      const res = await fetch(`${API_URL}/api/user/update-password/${currentUser._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

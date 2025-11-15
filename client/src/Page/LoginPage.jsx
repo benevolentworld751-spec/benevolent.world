@@ -8,6 +8,10 @@ import {
 } from "../redux/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import loginImage from "../assets/login.png";
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,7 +31,7 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       dispatch(loginStart());
-      const res = await fetch(`/api/auth/login`, {
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

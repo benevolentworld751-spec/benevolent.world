@@ -1,7 +1,10 @@
 import  { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
-
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
 
 const AllUsers = () => {
   const [allUser, setAllUsers] = useState([]);
@@ -12,7 +15,7 @@ const AllUsers = () => {
   const getUsers = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`/api/user/getAllUsers?searchTerm=${search}`);
+      const res = await fetch(`${API_URL}/api/user/getAllUsers?searchTerm=${search}`);
       const data = await res.json();
 
       if (data && data?.success === false) {
@@ -39,7 +42,7 @@ const AllUsers = () => {
     if (CONFIRM) {
       setLoading(true);
       try {
-        const res = await fetch(`/api/user/delete-user/${userId}`, {
+        const res = await fetch(`${API_URL}/api/user/delete-user/${userId}`, {
           method: "DELETE",
         });
         const data = await res.json();

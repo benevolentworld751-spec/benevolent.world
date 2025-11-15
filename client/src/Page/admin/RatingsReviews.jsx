@@ -1,7 +1,10 @@
 import { Rating } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
 const RatingsReviews = () => {
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -15,8 +18,8 @@ const RatingsReviews = () => {
       setLoading(true);
       let url =
         filter === "most" //most rated
-          ? `/api/package/get-packages?searchTerm=${search}&sort=packageTotalRatings`
-          : `/api/package/get-packages?searchTerm=${search}&sort=packageRating`; //all
+          ? `${API_URL}/api/package/get-packages?searchTerm=${search}&sort=packageTotalRatings`
+          : `${API_URL}/api/package/get-packages?searchTerm=${search}&sort=packageRating`; //all
       const res = await fetch(url);
       const data = await res.json();
       if (data?.success) {
@@ -45,8 +48,8 @@ const RatingsReviews = () => {
     const startIndex = numberOfPackages;
     let url =
       filter === "most" //most rated
-        ? `/api/package/get-packages?searchTerm=${search}&sort=packageTotalRatings&startIndex=${startIndex}`
-        : `/api/package/get-packages?searchTerm=${search}&sort=packageRating&startIndex=${startIndex}`; //all
+        ? `${API_URL}/api/package/get-packages?searchTerm=${search}&sort=packageTotalRatings&startIndex=${startIndex}`
+        : `${API_URL}/api/package/get-packages?searchTerm=${search}&sort=packageRating&startIndex=${startIndex}`; //all
     const res = await fetch(url);
     const data = await res.json();
     if (data?.packages?.length < 9) {
@@ -110,7 +113,7 @@ const RatingsReviews = () => {
               >
                 <Link to={`/package/ratings/${pack._id}`}>
                   <img
-                    src={`https://benevolentworld-tour.onrender.com/images/${pack?.packageImages[0]}`}
+                    src={`${API_URL}/images/${pack?.packageImages[0]}`}
                     alt="image"
                     className="w-20 h-20 rounded"
                   />

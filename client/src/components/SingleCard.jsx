@@ -5,6 +5,10 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import AskAIModal from "./AskAIModal";
 import axios from "axios";
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
 const SingleCard = ({ packageData }) => {
   const [showModal, setShowModal] = useState(false);
   const [aiReply, setAIReply] = useState("");
@@ -50,7 +54,7 @@ const SingleCard = ({ packageData }) => {
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >
         <img
-          src={`http://localhost:5000/images/${packageData.packageImages[0]}`}
+          src={`${API_URL}/images/${packageData.packageImages[0]}`}
           alt=""
           className="w-full h-[140px] object-cover "
         />

@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SingleCard from "../components/SingleCard";
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
 
 const Search = () => {
   const navigate = useNavigate();
@@ -36,7 +40,7 @@ const Search = () => {
       setShowMoreBtn(false);
       try {
         const searchQuery = urlParams.toString();
-        const res = await fetch(`/api/package/get-packages?${searchQuery}`);
+        const res = await fetch(`${API_URL}/api/package/get-packages?${searchQuery}`);
         const data = await res.json();
         setLoading(false);
         setAllPackages(data?.packages);

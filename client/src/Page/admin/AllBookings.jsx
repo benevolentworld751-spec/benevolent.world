@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
 const AllBookings = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [currentBookings, setCurrentBookings] = useState([]);
@@ -14,7 +17,7 @@ const AllBookings = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        `/api/booking/get-currentBookings?searchTerm=${searchTerm}`
+        `${API_URL}/api/booking/get-currentBookings?searchTerm=${searchTerm}`
       );
       const data = await res.json();
       if (data?.success) {
@@ -38,7 +41,7 @@ const AllBookings = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        `/api/booking/cancel-booking/${id}/${currentUser._id}`,
+        `${API_URL}/api/booking/cancel-booking/${id}/${currentUser._id}`,
         {
           method: "POST",
         }
@@ -85,7 +88,7 @@ const AllBookings = () => {
                 <Link to={`/package/${booking?.packageDetails?._id}`}>
                   <img
                     className="w-12 h-12"
-                    src={`https://benevolentworld-tour.onrender.com/images/${booking?.packageDetails?.packageImages[0]}`}
+                    src={`${API_URL}/images/${booking?.packageDetails?.packageImages[0]}`}
                     alt="Package Image"
                   />
                 </Link>

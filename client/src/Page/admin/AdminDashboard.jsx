@@ -33,7 +33,10 @@ import Payment from "./Payment";
 import RatingsReviews from "./RatingsReviews";
 import History from "./History";
 import { toast } from "react-toastify";
-
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -66,7 +69,7 @@ const { currentUser, loading } = useSelector((state) => state.user);
   const handleLogout = async () => {
     try {
       dispatch(logOutStart());
-      const res = await fetch("/api/auth/logout");
+      const res = await fetch(`${API_URL}/api/auth/logout`);
       const data = await res.json();
       if (data?.success !== true) {
         dispatch(logOutFailure(data?.message));
@@ -88,7 +91,7 @@ const { currentUser, loading } = useSelector((state) => state.user);
     if (CONFIRM) {
       try {
         dispatch(deleteUserAccountStart());
-        const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        const res = await fetch(`${API_URL}/api/user/delete/${currentUser._id}`, {
           method: "DELETE",
         });
         const data = await res.json();
@@ -114,7 +117,7 @@ const { currentUser, loading } = useSelector((state) => state.user);
                   src={
               formData.avatar?.startsWith("http")
               ? formData.avatar
-                  : `https://benevolentworld-tour.onrender.com/images/${formData.avatar}`
+                  : `${API_URL}/images/${formData.avatar}`
                      }
 
                   alt="Profile photo"

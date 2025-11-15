@@ -3,6 +3,10 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
 const MyBookings = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [currentBookings, setCurrentBookings] = useState([]);
@@ -15,7 +19,7 @@ const MyBookings = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        `/api/booking/get-UserCurrentBookings/${currentUser?._id}?searchTerm=${searchTerm}`
+        `${API_URL}/api/booking/get-UserCurrentBookings/${currentUser?._id}?searchTerm=${searchTerm}`
       );
       const data = await res.json();
       if (data?.success) {
@@ -39,7 +43,7 @@ const MyBookings = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        `/api/booking/cancel-booking/${id}/${currentUser._id}`,
+        `${API_URL}/api/booking/cancel-booking/${id}/${currentUser._id}`,
         {
           method: "POST",
         }
@@ -85,7 +89,7 @@ const MyBookings = () => {
                 <Link to={`/package/${booking?.packageDetails?._id}`}>
                   <img
                     className="w-12 h-12"
-                    src={`http://localhost:5000/images/${booking?.packageDetails?.packageImages[0]}`}
+                    src={`${API_URL}/images/${booking?.packageDetails?.packageImages[0]}`}
                     alt="Package Image"
                   />
                 </Link>

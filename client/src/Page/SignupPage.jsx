@@ -4,7 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import loginImage from "../assets/login.png";
 import { toast } from "react-toastify";
-
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? ""
+    : import.meta.env.VITE_SERVER_URL;
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -61,7 +64,7 @@ const SignupPage = () => {
        return;
       }
       try {
-         const res = await axios.post("https://benevolentworld-backend.onrender.com/api/auth/signup", formData);
+         const res = await axios.post(`${API_URL}/api/auth/signup`, formData);
       if (res?.data?.success) {
         toast.success(res?.data?.message);
         navigate("/login");

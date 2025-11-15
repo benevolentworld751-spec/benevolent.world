@@ -7,7 +7,7 @@ export default defineConfig({
    server: {
     proxy: {
       "/api": {
-        target: "https://benevolentworld-tour.onrender.com",
+        target: "https://benevolent-world.onrender.com",
         secure: false,
       },
     },
