@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 const API_URL =
   import.meta.env.MODE === "development"
-    ? ""
+    ? "http://localhost:5000"
     : import.meta.env.VITE_SERVER_URL;
 const AddPackages = () => {
   const [formData, setFormData] = useState({

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 const API_URL =
   import.meta.env.MODE === "development"
-    ? ""
+    ? "http://localhost:5000"
     : import.meta.env.VITE_SERVER_URL;
 const UpdatePackage = () => {
   const params = useParams();

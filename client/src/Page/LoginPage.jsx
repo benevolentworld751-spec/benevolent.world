@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import loginImage from "../assets/login.png";
 const API_URL =
   import.meta.env.MODE === "development"
-    ? ""
+    ? "http://localhost:5000"
     : import.meta.env.VITE_SERVER_URL;
 const LoginPage = () => {
   const dispatch = useDispatch();

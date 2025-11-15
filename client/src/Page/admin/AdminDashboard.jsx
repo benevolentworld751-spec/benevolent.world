@@ -35,7 +35,7 @@ import History from "./History";
 import { toast } from "react-toastify";
 const API_URL =
   import.meta.env.MODE === "development"
-    ? ""
+    ? "http://localhost:5000"
     : import.meta.env.VITE_SERVER_URL;
 const AdminDashboard = () => {
   const navigate = useNavigate();

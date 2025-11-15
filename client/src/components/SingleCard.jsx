@@ -7,7 +7,7 @@ import AskAIModal from "./AskAIModal";
 import axios from "axios";
 const API_URL =
   import.meta.env.MODE === "development"
-    ? ""
+    ? "http://localhost:5000"
     : import.meta.env.VITE_SERVER_URL;
 const SingleCard = ({ packageData }) => {
   const [showModal, setShowModal] = useState(false);
